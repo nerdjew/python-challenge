@@ -4,11 +4,13 @@ import csv
 # Path to collect data from the Resources folder
 budgetcsv = os.path.join('PyBank/Resources/budget_data.csv')
 
+# Lists and Variable to hold CSV information
 months = []
 variance = []
 difference = []
 total_sum = 0
 
+# Opening CSV file to be read
 with open(budgetcsv, encoding = 'utf8') as csvfile:
 
     # CSV reader specifies delimiter and variable that holds contents
@@ -17,22 +19,28 @@ with open(budgetcsv, encoding = 'utf8') as csvfile:
     # Skip Header
     next(csvreader)
 
-    #Define funtion to count months
+    # Loop to collect all the months and variances and store them in lists
     for x in csvreader:
         months.append(x[0])
         variance.append(x[1])
+        #Sums the variances to find total Profit/Loss number
         total_sum = total_sum + int(x[1])
 
+    # Variable to look ahead in our variance list
     i = 1
+    # Loop finds the difference of Profit/Loss for each month and stores in seperate list
     for x in range(len(variance)-1):
         difference.append(int(variance[i]) - int(variance[x]))
         i = i + 1
 
+    # Finds the monthly average change in Profit/Loss throughout the period
+    avg_variance = round(sum(difference)/len(difference),2)
+    
+    #Finds the Greatest increase and decrease index numbers
     maxindex = difference.index(max(difference))
     minindex = difference.index(min(difference))
-
-    avg_variance = round(sum(difference)/len(difference),2)
-
+   
+    # Prints text analysis from collected Data
     print('Financial Analysis')
     print('-----------------------------')
     print(f'Total months: {len(months)}')
@@ -40,3 +48,18 @@ with open(budgetcsv, encoding = 'utf8') as csvfile:
     print(f'Average Change: ${avg_variance}')
     print(f'Greatest Increase in Profits: {months[maxindex+1]} (${max(difference)})')
     print(f'Greatest Decrease in Profits: {months[minindex+1]} (${min(difference)})')
+
+# Set path for analysis file
+outpath = os.path.join('PyBank/Analysis/Budget_Analysis.txt')
+
+# opens or creates new file to write to
+with open(outpath, 'w') as text:
+    
+    #Writes text to file
+    text.write('Financial Analysis\n')
+    text.write('-----------------------------\n')
+    text.write(f'Total months: {len(months)}\n')
+    text.write(f'Total variance: ${total_sum}\n')
+    text.write(f'Average Change: ${avg_variance}\n')
+    text.write(f'Greatest Increase in Profits: {months[maxindex+1]} (${max(difference)})\n')
+    text.write(f'Greatest Decrease in Profits: {months[minindex+1]} (${min(difference)})\n')

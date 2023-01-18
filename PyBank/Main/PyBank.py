@@ -1,4 +1,4 @@
-
+# Import dependencies
 import os
 import csv
 
@@ -51,10 +51,10 @@ with open(budgetcsv, encoding = 'utf8') as csvfile:
 # Set path for analysis file
 outpath = os.path.join('PyBank/Analysis/Budget_Analysis.txt')
 
-# opens or creates new file to write to
+# Opens or creates new file to write to
 with open(outpath, 'w') as text:
     
-    #Writes text to file
+    # Writes text to file
     text.write('Financial Analysis\n')
     text.write('-----------------------------\n')
     text.write(f'Total months: {len(months)}\n')

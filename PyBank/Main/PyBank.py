@@ -1,3 +1,4 @@
+
 import os
 import csv
 
@@ -25,13 +26,11 @@ with open(budgetcsv, encoding = 'utf8') as csvfile:
         variance.append(x[1])
         #Sums the variances to find total Profit/Loss number
         total_sum = total_sum + int(x[1])
-
+        
     # Variable to look ahead in our variance list
-    i = 1
     # Loop finds the difference of Profit/Loss for each month and stores in seperate list
-    for x in range(len(variance)-1):
-        difference.append(int(variance[i]) - int(variance[x]))
-        i = i + 1
+    for i in range(len(variance)-1):
+        difference.append(int(variance[i+1]) - int(variance[i]))
 
     # Finds the monthly average change in Profit/Loss throughout the period
     avg_variance = round(sum(difference)/len(difference),2)
